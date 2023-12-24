@@ -1,21 +1,23 @@
-{% extends 'layout/base.html' %}
+{% extends 'admin/master.html' %}
 
-{% block content %}
-<section class="container">
-    <div class="row">
-        {% for p in products %}
-        <div class="col-xs-12 col-md-3" style="padding: 5px;">
-            <div class="card">
-                <img class="card-img-top" src="{{ p.image }}" alt="Card image">
-                <div class="card-body">
-                    <h4 class="card-title">{{p.name}}</h4>
-                    <p class="card-text">{{ p.price }} VNĐ</p>
-                    <a href="#" class="btn btn-primary">Xem chi tiết</a>
-                    <a href="#" class="btn btn-danger">Đặt hàng</a>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+{% block body %}
+
+
+{% if current_user.is_authenticated %}
+<h1 class="text-center text-info">CHÀO MỪNG ĐẾN TRANG QUẢN TRỊ!</h1>
+<h2 class="text-info">Chào {{ current_user.name }}!</h2>
+{% else %}
+<h1 class="text-center text-success">ĐĂNG NHẬP QUẢN TRỊ</h1>
+<form method="post" action="/admin/login">
+    <div class="mb-3 mt-3">
+        <label for="username" class="form-label">Tên đăng nhập:</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Tên đăng nhập">
     </div>
-</section>
+    <div class="mb-3">
+        <label for="pwd" class="form-label">Mật khẩu:</label>
+        <input type="password" class="form-control" id="pwd" name="password" placeholder="Mật khẩu">
+    </div>
+    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+</form>
+{% endif %}
 {% endblock %}
